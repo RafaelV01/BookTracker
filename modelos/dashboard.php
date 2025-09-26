@@ -29,7 +29,7 @@ $books = $stmt->fetchAll();
 <?php include '../vistas/includes/header.php'; ?>
 <style>
     body {
-        background: linear-gradient(135deg, #8B5E3C 0%, #F5E9DA 100%);
+        background: #dfd4c6ff;
         min-height: 100vh;
         font-family: 'Merriweather', serif;
     }
@@ -197,7 +197,7 @@ $books = $stmt->fetchAll();
                     <?php foreach ($reading_books as $book): ?>
                         <div class="col-md-4 mb-3">
                             <div class="card h-100">
-                                <img src="<?php echo $book['cover_image'] ? '../' . htmlspecialchars($book['cover_image']) : 'https://via.placeholder.com/150x200?text=Sin+Portada'; ?>" 
+                                <img src="<?php echo $book['cover_image'] ? htmlspecialchars($book['cover_image']) : 'https://via.placeholder.com/150x200?text=Sin+Portada'; ?>" 
                                      class="card-img-top" alt="Portada de <?php echo htmlspecialchars($book['title']); ?>"
                                      style="height: 200px; object-fit: cover;">
                                 <div class="card-body d-flex flex-column">
@@ -245,7 +245,7 @@ $books = $stmt->fetchAll();
                     <?php foreach ($to_read_books as $book): ?>
                         <div class="col-md-4 mb-3">
                             <div class="card h-100">
-                                <img src="<?php echo $book['cover_image'] ? '../' . htmlspecialchars($book['cover_image']) : 'https://via.placeholder.com/150x200?text=Sin+Portada'; ?>" 
+                                <img src="<?php echo $book['cover_image'] ? htmlspecialchars($book['cover_image']) : 'https://via.placeholder.com/150x200?text=Sin+Portada'; ?>" 
                                      class="card-img-top" alt="Portada de <?php echo htmlspecialchars($book['title']); ?>"
                                      style="height: 200px; object-fit: cover;">
                                 <div class="card-body d-flex flex-column">

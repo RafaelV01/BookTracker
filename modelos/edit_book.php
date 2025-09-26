@@ -140,7 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <div class="form-text">Formatos aceptados: JPG, PNG, GIF, WebP</div>
                                 <?php if ($book['cover_image']): ?>
                                     <div class="mt-2">
-                                        <img src="../<?php echo htmlspecialchars($book['cover_image']); ?>" 
+                                        <img src="<?php echo htmlspecialchars($book['cover_image']); ?>" 
                                              width="100" class="img-thumbnail" alt="Portada actual">
                                         <small class="text-muted d-block">Portada actual</small>
                                     </div>
