@@ -45,7 +45,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Iniciar Sesión - BOOKTRACKER</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="vistas/styles/style.css">
+    <link rel="stylesheet" href="../vistas/styles/style.css">
+    <style>
+        body.login-body {
+            background: linear-gradient(135deg, #8B5E3C 0%, #F5E9DA 100%);
+            min-height: 100vh;
+            font-family: 'Merriweather', serif;
+        }
+        .card {
+            background: var(--beige, #F5E9DA);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+    </style>
 </head>
 <body class="login-body">
     <div class="container mt-5">

@@ -27,6 +27,36 @@ $books = $stmt->fetchAll();
 ?>
 
 <?php include '../vistas/includes/header.php'; ?>
+<style>
+    body {
+        background: linear-gradient(135deg, #8B5E3C 0%, #F5E9DA 100%);
+        min-height: 100vh;
+        font-family: 'Merriweather', serif;
+    }
+    .card {
+        background: var(--beige, #F5E9DA);
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    .stats-card {
+        border-radius: 20px !important;
+        color: #fff !important;
+        font-weight: 500;
+        font-size: 1.3rem;
+        padding: 1.5rem 2rem;
+        margin-right: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+        min-width: 180px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .stats-leidos { background: #218838 !important; }
+    .stats-leyendo { background: #FFC107 !important; color: #333 !important; }
+    .stats-porleer { background: #17C8E2 !important; }
+    .stats-total { background: #0074D9 !important; }
+</style>
 
 <div class="container mt-4">
     <!-- Notificación de éxito de login -->
@@ -63,40 +93,40 @@ $books = $stmt->fetchAll();
     <!-- Estadísticas rápidas -->
     <div class="row mb-4">
         <div class="col-md-3">
-            <div class="card text-white bg-success">
-                <div class="card-body">
-                    <h5 class="card-title">Leídos</h5>
-                    <p class="card-text h4">
+            <div class="stats-card stats-leidos">
+                <div>
+                    <span style="font-size:1.1rem;font-weight:bold;">Leídos</span><br>
+                    <span style="font-size:2rem;font-weight:bold;">
                         <?php echo count(array_filter($books, function($book) { return $book['status'] == 'read'; })); ?>
-                    </p>
+                    </span>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card text-white bg-warning">
-                <div class="card-body">
-                    <h5 class="card-title">Leyendo</h5>
-                    <p class="card-text h4">
+            <div class="stats-card stats-leyendo">
+                <div>
+                    <span style="font-size:1.1rem;font-weight:bold;">Leyendo</span><br>
+                    <span style="font-size:2rem;font-weight:bold;">
                         <?php echo count(array_filter($books, function($book) { return $book['status'] == 'reading'; })); ?>
-                    </p>
+                    </span>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card text-white bg-info">
-                <div class="card-body">
-                    <h5 class="card-title">Por Leer</h5>
-                    <p class="card-text h4">
+            <div class="stats-card stats-porleer">
+                <div>
+                    <span style="font-size:1.1rem;font-weight:bold;">Por Leer</span><br>
+                    <span style="font-size:2rem;font-weight:bold;">
                         <?php echo count(array_filter($books, function($book) { return $book['status'] == 'to_read'; })); ?>
-                    </p>
+                    </span>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card text-white bg-primary">
-                <div class="card-body">
-                    <h5 class="card-title">Total</h5>
-                    <p class="card-text h4"><?php echo count($books); ?></p>
+            <div class="stats-card stats-total">
+                <div>
+                    <span style="font-size:1.1rem;font-weight:bold;">Total</span><br>
+                    <span style="font-size:2rem;font-weight:bold;"><?php echo count($books); ?></span>
                 </div>
             </div>
         </div>
