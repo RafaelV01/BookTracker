@@ -18,7 +18,7 @@ $book = $stmt->fetch();
 if ($book) {
     echo '<div class="row">';
     echo '<div class="col-md-4">';
-    echo '<img src="' . ($book['cover_image'] ? '../' . htmlspecialchars($book['cover_image']) : 'https://via.placeholder.com/150x200?text=Sin+Portada') . '" class="img-fluid rounded mb-3" alt="Portada" style="max-height: 300px; object-fit: cover;">';
+    echo '<img src="' . ($book['cover_image'] ? htmlspecialchars($book['cover_image']) : 'https://via.placeholder.com/150x200?text=Sin+Portada') . '" class="img-fluid rounded mb-3" alt="Portada" style="max-height: 300px; object-fit: cover;">';
     echo '</div>';
     echo '<div class="col-md-8">';
     echo '<h4 class="text-primary">' . htmlspecialchars($book['title']) . '</h4>';
