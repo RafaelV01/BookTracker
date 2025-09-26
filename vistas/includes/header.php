@@ -25,11 +25,6 @@
                             <i class="fas fa-books"></i> Mi Estantería
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="profile.php">
-                            <i class="fas fa-user"></i> Perfil
-                        </a>
-                    </li>
                 </ul>
                 <div class="navbar-nav">
                     <span class="navbar-text me-3">

@@ -52,10 +52,10 @@ $books = $stmt->fetchAll();
         flex-direction: column;
         justify-content: center;
     }
-    .stats-leidos { background: #218838 !important; }
-    .stats-leyendo { background: #FFC107 !important; color: #333 !important; }
-    .stats-porleer { background: #17C8E2 !important; }
-    .stats-total { background: #0074D9 !important; }
+    .stats-leidos { background: #c0f7ccff !important; color: #333 !important; border: 2px solid #867a6cff; }
+    .stats-leyendo { background: #fee28fff !important; color: #333 !important; border: 2px solid #867a6cff;}
+    .stats-porleer { background: #7be4f5ff !important; color: #333 !important; border: 2px solid #867a6cff;}
+    .stats-total { background: #6cbafeff !important; color: #333 !important; border: 2px solid #867a6cff;}
 </style>
 
 <div class="container mt-4">
