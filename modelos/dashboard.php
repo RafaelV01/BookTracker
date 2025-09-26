@@ -58,6 +58,7 @@ $books = $stmt->fetchAll();
     .stats-total { background: #6cbafeff !important; color: #333 !important; border: 2px solid #867a6cff;}
     /* Estilos para la estantería (lomos de libros) */
 .book-spine {
+    background-color: #8B4513;
     color: white;
     padding: 10px;
     height: 200px;
@@ -190,17 +191,8 @@ $books = $stmt->fetchAll();
                     </div>
                 <?php else: ?>
                     <?php foreach ($read_books as $book): ?>
-                        <?php
-                            // Generar color aleatorio en PHP
-                            $randomColor = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
-                        ?>
                         <div class="col-md-1 mb-3">
-                            <div class="book-spine" 
-                                style="background-color: <?= $randomColor ?>;" 
-                                data-bs-toggle="modal" 
-                                data-bs-target="#bookModal" 
-                                data-book-id="<?php echo $book['id']; ?>">
-                                
+                            <div class="book-spine" data-bs-toggle="modal" data-bs-target="#bookModal" data-book-id="<?php echo $book['id']; ?>">
                                 <div class="spine-content">
                                     <h6><?php echo htmlspecialchars($book['title']); ?></h6>
                                     <?php if ($book['rating']): ?>
@@ -215,7 +207,6 @@ $books = $stmt->fetchAll();
                         </div>
                     <?php endforeach; ?>
                 <?php endif; ?>
-
             </div>
         </div>
 
