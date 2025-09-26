@@ -29,5 +29,5 @@ Se plantea el diseño, planificación y despliegue de una aplicación web para e
 Se utilizará la arquitectura **MVC (Modelo Vista Controlador)** para la construcción del proyecto, junto con prácticas comprendidas bajo la filosofía **DevOps**, haciendo uso de **GitHub** como herramienta principal de colaboración y automatización.
 
 ---
-
+Hecho por el equipo Dos Seniors 3 Juniors
 
