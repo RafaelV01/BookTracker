@@ -56,6 +56,32 @@ $books = $stmt->fetchAll();
     .stats-leyendo { background: #fee28fff !important; color: #333 !important; border: 2px solid #867a6cff;}
     .stats-porleer { background: #7be4f5ff !important; color: #333 !important; border: 2px solid #867a6cff;}
     .stats-total { background: #6cbafeff !important; color: #333 !important; border: 2px solid #867a6cff;}
+    /* Estilos para la estantería (lomos de libros) */
+.book-spine {
+    color: white;
+    padding: 10px;
+    height: 200px;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    cursor: pointer;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+}
+
+.book-spine:hover {
+    transform: scale(1.05);
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.4);
+}
+
+.spine-content h6 {
+    margin: 0;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
 </style>
 
 <div class="container mt-4">
@@ -164,8 +190,17 @@ $books = $stmt->fetchAll();
                     </div>
                 <?php else: ?>
                     <?php foreach ($read_books as $book): ?>
-                        <div class="col-md-2 mb-3">
-                            <div class="book-spine" data-bs-toggle="modal" data-bs-target="#bookModal" data-book-id="<?php echo $book['id']; ?>">
+                        <?php
+                            // Generar color aleatorio en PHP
+                            $randomColor = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+                        ?>
+                        <div class="col-md-1 mb-3">
+                            <div class="book-spine" 
+                                style="background-color: <?= $randomColor ?>;" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#bookModal" 
+                                data-book-id="<?php echo $book['id']; ?>">
+                                
                                 <div class="spine-content">
                                     <h6><?php echo htmlspecialchars($book['title']); ?></h6>
                                     <?php if ($book['rating']): ?>
@@ -180,6 +215,7 @@ $books = $stmt->fetchAll();
                         </div>
                     <?php endforeach; ?>
                 <?php endif; ?>
+
             </div>
         </div>
 
@@ -361,7 +397,7 @@ $books = $stmt->fetchAll();
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></>
 <script>
     // Mostrar/ocultar campos según el estado
     document.getElementById('status').addEventListener('change', function() {
