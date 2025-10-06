@@ -35,11 +35,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (!file_exists($target_dir)) {
             mkdir($target_dir, 0777, true);
         }
-        
+
         // Validar tipo de archivo
         $allowed_types = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
         $file_type = $_FILES['cover_image']['type'];
-        
+
         if (in_array($file_type, $allowed_types)) {
             $cover_image = $target_dir . time() . '_' . basename($_FILES['cover_image']['name']);
             if (move_uploaded_file($_FILES['cover_image']['tmp_name'], $cover_image)) {
@@ -61,10 +61,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $premise = null;
 
     if ($status == 'reading') {
-        $total_pages = !empty($_POST['total_pages']) ? (int)$_POST['total_pages'] : null;
-        $current_page = !empty($_POST['current_page']) ? (int)$_POST['current_page'] : null;
+        $total_pages = !empty($_POST['total_pages']) ? (int) $_POST['total_pages'] : null;
+        $current_page = !empty($_POST['current_page']) ? (int) $_POST['current_page'] : null;
     } elseif ($status == 'read') {
-        $rating = !empty($_POST['rating']) ? (int)$_POST['rating'] : null;
+        $rating = !empty($_POST['rating']) ? (int) $_POST['rating'] : null;
         $review = trim($_POST['review'] ?? '');
     } elseif ($status == 'to_read') {
         $premise = trim($_POST['premise'] ?? '');
@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['book_success'] = "Libro actualizado exitosamente: " . htmlspecialchars($title);
         header('Location: dashboard.php');
         exit;
-        
+
     } catch (PDOException $e) {
         $_SESSION['book_error'] = "Error al actualizar el libro: " . $e->getMessage();
         header('Location: dashboard.php');
@@ -90,6 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Editar Libro - BOOKTRACKER</title>
@@ -97,9 +98,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="../vistas/styles/style.css">
 </head>
+
 <body>
     <?php include '../vistas/includes/header.php'; ?>
-    
+
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -108,98 +110,106 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <h2 class="card-title mb-4">
                             <i class="fas fa-edit"></i> Editar Libro
                         </h2>
-                        
+
                         <form method="POST" enctype="multipart/form-data">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="title" class="form-label">Título *</label>
-                                        <input type="text" class="form-control" id="title" name="title" 
-                                               value="<?php echo htmlspecialchars($book['title']); ?>" required>
+                                        <input type="text" class="form-control" id="title" name="title"
+                                            value="<?php echo htmlspecialchars($book['title']); ?>" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="author" class="form-label">Autor *</label>
-                                        <input type="text" class="form-control" id="author" name="author" 
-                                               value="<?php echo htmlspecialchars($book['author']); ?>" required>
+                                        <input type="text" class="form-control" id="author" name="author"
+                                            value="<?php echo htmlspecialchars($book['author']); ?>" required>
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="mb-3">
                                 <label for="genre" class="form-label">Género</label>
-                                <input type="text" class="form-control" id="genre" name="genre" 
-                                       value="<?php echo htmlspecialchars($book['genre']); ?>" 
-                                       placeholder="Ej: Novela, Ciencia Ficción, etc.">
+                                <input type="text" class="form-control" id="genre" name="genre"
+                                    value="<?php echo htmlspecialchars($book['genre']); ?>"
+                                    placeholder="Ej: Novela, Ciencia Ficción, etc.">
                             </div>
-                            
+
                             <div class="mb-3">
                                 <label for="cover_image" class="form-label">Portada</label>
-                                <input type="file" class="form-control" id="cover_image" name="cover_image" accept="image/*">
+                                <input type="file" class="form-control" id="cover_image" name="cover_image"
+                                    accept="image/*">
                                 <div class="form-text">Formatos aceptados: JPG, PNG, GIF, WebP</div>
                                 <?php if ($book['cover_image']): ?>
                                     <div class="mt-2">
-                                        <img src="<?php echo htmlspecialchars($book['cover_image']); ?>" 
-                                             width="100" class="img-thumbnail" alt="Portada actual">
+                                        <img src="<?php echo htmlspecialchars($book['cover_image']); ?>" width="100"
+                                            class="img-thumbnail" alt="Portada actual">
                                         <small class="text-muted d-block">Portada actual</small>
                                     </div>
                                 <?php endif; ?>
                             </div>
-                            
+
                             <div class="mb-3">
                                 <label for="status" class="form-label">Estado *</label>
                                 <select class="form-control" id="status" name="status" required>
-                                    <option value="to_read" <?php echo $book['status'] == 'to_read' ? 'selected' : ''; ?>>Por Leer</option>
-                                    <option value="reading" <?php echo $book['status'] == 'reading' ? 'selected' : ''; ?>>Leyendo</option>
-                                    <option value="read" <?php echo $book['status'] == 'read' ? 'selected' : ''; ?>>Leído</option>
+                                    <option value="to_read" <?php echo $book['status'] == 'to_read' ? 'selected' : ''; ?>>
+                                        Por Leer</option>
+                                    <option value="reading" <?php echo $book['status'] == 'reading' ? 'selected' : ''; ?>>
+                                        Leyendo</option>
+                                    <option value="read" <?php echo $book['status'] == 'read' ? 'selected' : ''; ?>>Leído
+                                    </option>
                                 </select>
                             </div>
-                            
-                            <div id="read-fields" class="status-fields" style="<?php echo $book['status'] == 'read' ? 'display:block;' : 'display:none;'; ?>">
+
+                            <div id="read-fields" class="status-fields"
+                                style="<?php echo $book['status'] == 'read' ? 'display:block;' : 'display:none;'; ?>">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="rating" class="form-label">Calificación (1-5)</label>
-                                            <input type="number" class="form-control" id="rating" name="rating" 
-                                                   min="1" max="5" value="<?php echo $book['rating']; ?>">
+                                            <input type="number" class="form-control" id="rating" name="rating" min="1"
+                                                max="5" value="<?php echo $book['rating']; ?>">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="review" class="form-label">Reseña</label>
-                                    <textarea class="form-control" id="review" name="review" rows="4" 
-                                              placeholder="Tu opinión sobre el libro"><?php echo htmlspecialchars($book['review']); ?></textarea>
+                                    <textarea class="form-control" id="review" name="review" rows="4"
+                                        placeholder="Tu opinión sobre el libro"><?php echo htmlspecialchars($book['review']); ?></textarea>
                                 </div>
                             </div>
-                            
-                            <div id="reading-fields" class="status-fields" style="<?php echo $book['status'] == 'reading' ? 'display:block;' : 'display:none;'; ?>">
+
+                            <div id="reading-fields" class="status-fields"
+                                style="<?php echo $book['status'] == 'reading' ? 'display:block;' : 'display:none;'; ?>">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="total_pages" class="form-label">Total de páginas</label>
-                                            <input type="number" class="form-control" id="total_pages" name="total_pages" 
-                                                   min="1" value="<?php echo $book['total_pages']; ?>">
+                                            <input type="number" class="form-control" id="total_pages"
+                                                name="total_pages" min="1" value="<?php echo $book['total_pages']; ?>">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="current_page" class="form-label">Páginas leídas</label>
-                                            <input type="number" class="form-control" id="current_page" name="current_page" 
-                                                   min="0" value="<?php echo $book['current_page']; ?>">
+                                            <input type="number" class="form-control" id="current_page"
+                                                name="current_page" min="0"
+                                                value="<?php echo $book['current_page']; ?>">
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            
-                            <div id="to_read-fields" class="status-fields" style="<?php echo $book['status'] == 'to_read' ? 'display:block;' : 'display:none;'; ?>">
+
+                            <div id="to_read-fields" class="status-fields"
+                                style="<?php echo $book['status'] == 'to_read' ? 'display:block;' : 'display:none;'; ?>">
                                 <div class="mb-3">
                                     <label for="premise" class="form-label">Premisa o sinopsis</label>
-                                    <textarea class="form-control" id="premise" name="premise" rows="4" 
-                                              placeholder="Breve descripción o por qué quieres leerlo"><?php echo htmlspecialchars($book['premise']); ?></textarea>
+                                    <textarea class="form-control" id="premise" name="premise" rows="4"
+                                        placeholder="Breve descripción o por qué quieres leerlo"><?php echo htmlspecialchars($book['premise']); ?></textarea>
                                 </div>
                             </div>
-                            
+
                             <div class="d-flex gap-2">
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fas fa-save"></i> Guardar Cambios
@@ -217,26 +227,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.getElementById('status').addEventListener('change', function() {
+        document.getElementById('status').addEventListener('change', function () {
             var status = this.value;
-            document.querySelectorAll('.status-fields').forEach(function(field) {
+            document.querySelectorAll('.status-fields').forEach(function (field) {
                 field.style.display = 'none';
             });
             document.getElementById(status + '-fields').style.display = 'block';
         });
 
         // Validación básica del formulario
-        document.querySelector('form').addEventListener('submit', function(e) {
+        document.querySelector('form').addEventListener('submit', function (e) {
             var title = document.getElementById('title').value.trim();
             var author = document.getElementById('author').value.trim();
-            
+
             if (!title || !author) {
                 e.preventDefault();
                 alert('Por favor, completa los campos obligatorios (Título y Autor).');
             }
         });
     </script>
-    
+
     <?php include '../vistas/includes/footer.php'; ?>
 </body>
+
 </html>

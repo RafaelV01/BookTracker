@@ -21,12 +21,12 @@ if ($book) {
     if ($book['cover_image'] && file_exists('../' . $book['cover_image'])) {
         unlink('../' . $book['cover_image']);
     }
-    
+
     try {
         $sql = "DELETE FROM books WHERE id = ? AND user_id = ?";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$book_id, $user_id]);
-        
+
         $_SESSION['book_success'] = "Libro eliminado exitosamente: " . htmlspecialchars($book['title']);
     } catch (PDOException $e) {
         $_SESSION['book_error'] = "Error al eliminar el libro: " . $e->getMessage();

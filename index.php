@@ -16,6 +16,7 @@ if (isset($_SESSION['user_id'])) {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,148 +25,191 @@ if (isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="vistas/styles/style.css">
     <style>
+        body {
+            background: linear-gradient(135deg, var(--beige, #F5E9DA) 0%, var(--brown-700, #A67C52) 100%);
+            color: var(--text-dark, #3E2723);
+            font-family: 'Merriweather', serif;
+        }
+
+        /* Hero Section */
         .hero-section {
             background: linear-gradient(135deg, var(--primary-brown, #8B5E3C) 0%, var(--beige, #F5E9DA) 100%);
             color: var(--text-light, #FFF8F0);
-            padding: 100px 0;
-            min-height: 100vh;
+            padding: 120px 0;
+            min-height: 50vh;
             display: flex;
-            align-items: center;
-            font-family: 'Merriweather', serif;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.2);
         }
+
+        .hero-section h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-section p {
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: auto;
+            line-height: 1.6;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--dark-brown, #4E342E) !important;
+            padding: 0.8rem 1rem;
+        }
+
+        .navbar-brand,
+        .navbar-dark .navbar-nav .nav-link {
+            color: var(--golden, #C9B37F) !important;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-brown, #8B5E3C);
+            border-color: var(--primary-brown, #8B5E3C);
+            color: var(--text-light, #FFF8F0);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover,
+        .btn-primary:focus {
+            background-color: var(--dark-brown, #4E342E);
+            border-color: var(--dark-brown, #4E342E);
+            color: var(--golden, #C9B37F);
+        }
+
+        .btn-outline-light {
+            color: var(--primary-brown, #8B5E3C);
+            border-color: var(--primary-brown, #8B5E3C);
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-light:hover {
+            background-color: var(--primary-brown, #8B5E3C);
+            color: var(--text-light, #FFF8F0);
+        }
+
+        /* Feature Icons */
         .feature-icon {
             font-size: 3rem;
             color: var(--primary-brown, #8B5E3C);
             margin-bottom: 1rem;
         }
+
+        .feature-icon i {
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .feature-icon i:hover {
+            transform: scale(1.2);
+            color: var(--golden, #C9B37F);
+        }
+
+        /* Feature Cards */
+        .features-section h3 {
+            margin-top: 15px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .features-section p {
+            color: var(--accent, #BCA18A);
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-brown, #4E342E);
+            color: var(--golden, #C9B37F);
+            padding: 10px;
+            font-size: 0.9rem;
+        }
+
+        /* Alerts */
         .logout-alert {
             position: fixed;
             top: 20px;
             right: 20px;
             z-index: 1050;
             min-width: 300px;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
-        .card, .card-body {
-            background: var(--beige, #F5E9DA);
-            color: var(--text-dark, #3E2723);
-        }
-        .navbar, .bg-dark, footer.bg-dark {
-            background-color: var(--dark-brown, #4E342E) !important;
-        }
-        .navbar-brand, .navbar-dark .navbar-nav .nav-link, .navbar-dark .navbar-brand {
-            color: var(--golden, #C9B37F) !important;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-        .btn-primary {
-            background-color: var(--primary-brown, #8B5E3C);
-            border-color: var(--primary-brown, #8B5E3C);
-            color: var(--text-light, #FFF8F0);
-        }
-        .btn-primary:hover, .btn-primary:focus {
-            background-color: var(--dark-brown, #4E342E);
-            border-color: var(--dark-brown, #4E342E);
-            color: var(--golden, #C9B37F);
-        }
-        .btn-outline-light {
-            color: var(--primary-brown, #8B5E3C);
-            border-color: var(--primary-brown, #8B5E3C);
-        }
-        .btn-outline-light:hover {
-            background-color: var(--primary-brown, #8B5E3C);
-            color: var(--text-light, #FFF8F0);
-        }
-        .text-primary {
-            color: var(--primary-brown, #8B5E3C) !important;
-        }
-        .text-warning {
-            color: var(--golden, #C9B37F) !important;
-        }
-        .text-info {
-            color: var(--accent, #BCA18A) !important;
-        }
-        .text-success {
-            color: #6d9c6d !important;
-        }
+
         .alert-success {
             background: linear-gradient(90deg, var(--golden, #C9B37F) 60%, var(--beige, #F5E9DA) 100%);
             color: var(--dark-brown, #4E342E);
             border-color: var(--golden, #C9B37F);
         }
-        .alert-danger, .alert-warning {
-            background: linear-gradient(90deg, #e57373 60%, var(--beige, #F5E9DA) 100%);
-            color: var(--dark-brown, #4E342E);
-            border-color: #e57373;
-        }
     </style>
 </head>
-<body style="background: linear-gradient(135deg, var(--beige) 0%, var(--brown-700, #A67C52) 100%); color: var(--text-dark, #3E2723); font-family: 'Merriweather', serif;">
-    <!-- Navbar para páginas públicas -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: var(--dark-brown, #4E342E);">
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="index.php" style="color: var(--golden, #C9B37F);">
-                <i class="fas fa-book" style="color: var(--golden, #C9B37F);"></i> BOOKTRACKER
+            <a class="navbar-brand" href="index.php">
+                BOOKTRACKER
             </a>
             <div class="navbar-nav ms-auto">
-                <a href="vistas/login.php" class="btn btn-outline-light me-2" style="color: var(--primary-brown, #8B5E3C); border-color: var(--primary-brown, #8B5E3C);">
-                    <i class="fas fa-sign-in-alt" style="color: var(--accent, #BCA18A);"></i> Iniciar Sesión
+                <a href="vistas/login.php" class="btn btn-outline-light me-2">
+                    <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
                 </a>
-                <a href="modelos/register.php" class="btn btn-primary" style="background-color: var(--primary-brown, #8B5E3C); border-color: var(--primary-brown, #8B5E3C); color: var(--text-light, #FFF8F0);">
-                    <i class="fas fa-user-plus" style="color: var(--accent, #BCA18A);"></i> Registrarse
+                <a href="modelos/register.php" class="btn btn-primary">
+                    <i class="fas fa-user-plus"></i> Registrarse
                 </a>
             </div>
         </div>
     </nav>
 
-    <!-- Notificación de logout -->
+    <!-- Logout Notification -->
     <?php if (isset($logout_message)): ?>
-    <div class="alert alert-success alert-dismissible fade show logout-alert" role="alert">
-        <strong><i class="fas fa-check-circle"></i> ¡Éxito!</strong> <?php echo $logout_message; ?>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+        <div class="alert alert-success alert-dismissible fade show logout-alert" role="alert">
+            <strong><i class="fas fa-check-circle"></i> ¡Éxito!</strong> <?php echo $logout_message; ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     <?php endif; ?>
 
     <!-- Hero Section -->
     <section class="hero-section">
-        <div class="container text-center">
-            <h1 class="display-4 fw-bold mb-4" style="color: var(--golden, #C9B37F);">
-                <i class="fas fa-book-open" style="color: var(--accent, #BCA18A);"></i> BOOKTRACKER
-            </h1>
-            <p class="lead mb-4" style="color: var(--text-light, #FFF8F0);">Gestiona tu biblioteca personal, lleva el control de tus lecturas y descubre nuevos libros.</p>
+        <div class="container">
+            <h1><i class="fas fa-book-open"></i> BOOKTRACKER</h1>
+            <p>Gestiona tu biblioteca personal, lleva el control de tus lecturas y descubre nuevos libros.</p>
         </div>
     </section>
 
     <!-- Features Section -->
-    <section class="py-5 bg-light" style="background: var(--beige, #F5E9DA);">
+    <section class="features-section py-5" style="background: var(--beige, #F5E9DA);">
         <div class="container">
             <div class="row text-center">
                 <div class="col-md-4 mb-4">
-                    <div class="feature-icon">
-                        <i class="fas fa-books" style="color: var(--primary-brown, #8B5E3C);"></i>
-                    </div>
-                    <h3 style="color: var(--primary-brown, #8B5E3C);">Gestiona tu Biblioteca</h3>
-                    <p class="text-muted" style="color: var(--accent, #BCA18A);">Organiza todos tus libros en una estantería virtual personalizada.</p>
+                    <div class="feature-icon"><i class="fas  fa-book"></i></div>
+                    <h3>Gestiona tu Biblioteca</h3>
+                    <p>Organiza todos tus libros en una estantería virtual personalizada.</p>
                 </div>
                 <div class="col-md-4 mb-4">
-                    <div class="feature-icon">
-                        <i class="fas fa-chart-line" style="color: var(--primary-brown, #8B5E3C);"></i>
-                    </div>
-                    <h3 style="color: var(--primary-brown, #8B5E3C);">Sigue tu Progreso</h3>
-                    <p class="text-muted" style="color: var(--accent, #BCA18A);">Lleva el control de tus lecturas y visualiza tu progreso.</p>
+                    <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>Sigue tu Progreso</h3>
+                    <p>Lleva el control de tus lecturas y visualiza tu progreso.</p>
                 </div>
                 <div class="col-md-4 mb-4">
-                    <div class="feature-icon">
-                        <i class="fas fa-star" style="color: var(--golden, #C9B37F);"></i>
-                    </div>
-                    <h3 style="color: var(--primary-brown, #8B5E3C);">Califica y Reseña</h3>
-                    <p class="text-muted" style="color: var(--accent, #BCA18A);">Guarda tus opiniones y calificaciones de cada libro leído.</p>
+                    <div class="feature-icon"><i class="fas fa-star"></i></div>
+                    <h3>Califica y Reseña</h3>
+                    <p>Guarda tus opiniones y calificaciones de cada libro leído.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-dark text-white py-4" style="background-color: var(--dark-brown, #4E342E); color: var(--golden, #C9B37F);">
+    <footer>
         <div class="container text-center">
             <p>&copy; 2024 BOOKTRACKER. Todos los derechos reservados.</p>
         </div>
@@ -174,7 +218,7 @@ if (isset($_SESSION['user_id'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Auto-dismiss alert después de 5 segundos
-        setTimeout(function() {
+        setTimeout(function () {
             var alert = document.querySelector('.alert');
             if (alert) {
                 var bsAlert = new bootstrap.Alert(alert);
@@ -183,4 +227,5 @@ if (isset($_SESSION['user_id'])) {
         }, 5000);
     </script>
 </body>
+
 </html>

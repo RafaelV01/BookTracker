@@ -15,6 +15,7 @@ unset($_SESSION['registered_username']);
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Registro Exitoso - BOOKTRACKER</title>
@@ -29,27 +30,44 @@ unset($_SESSION['registered_username']);
             align-items: center;
             justify-content: center;
         }
+
         .success-card {
             background: white;
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             animation: fadeIn 0.5s ease-in;
         }
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
+
         .success-icon {
             font-size: 4rem;
             color: #28a745;
             animation: bounce 1s infinite alternate;
         }
+
         @keyframes bounce {
-            from { transform: scale(1); }
-            to { transform: scale(1.1); }
+            from {
+                transform: scale(1);
+            }
+
+            to {
+                transform: scale(1.1);
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="row justify-content-center">
@@ -61,16 +79,16 @@ unset($_SESSION['registered_username']);
                         </div>
                         <h2 class="card-title mb-3">¡Registro Exitoso!</h2>
                         <p class="card-text lead mb-4"><?php echo $message; ?></p>
-                        
+
                         <div class="alert alert-info mb-4">
                             <i class="fas fa-info-circle"></i>
                             <strong>Usuario registrado:</strong> <?php echo htmlspecialchars($username); ?>
                         </div>
-                        
+
                         <p class="text-muted mb-4">
                             Ahora puedes iniciar sesión y comenzar a gestionar tu biblioteca personal.
                         </p>
-                        
+
                         <a href="../vistas/login.php" class="btn btn-primary btn-lg">
                             <i class="fas fa-sign-in-alt"></i> Ir a Iniciar Sesión
                         </a>
@@ -86,7 +104,7 @@ unset($_SESSION['registered_username']);
 
     <script>
         // Redirección automática después de 5 segundos
-        setTimeout(function() {
+        setTimeout(function () {
             window.location.href = '../vistas/login.php';
         }, 5000);
 
@@ -94,7 +112,7 @@ unset($_SESSION['registered_username']);
         let countdown = 5;
         const countdownElement = document.getElementById('countdown');
 
-        const countdownInterval = setInterval(function() {
+        const countdownInterval = setInterval(function () {
             countdown--;
             countdownElement.textContent = countdown;
             if (countdown <= 0) {
@@ -104,4 +122,5 @@ unset($_SESSION['registered_username']);
         }, 1000);
     </script>
 </body>
+
 </html>

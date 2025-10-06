@@ -4,7 +4,7 @@ session_start();
 // Si se confirma el logout via POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_logout'])) {
     session_destroy();
-    
+
     // Establecer cookie para mostrar notificación en el index
     setcookie('logout_success', '1', time() + 5, '/'); // Expira en 5 segundos
 
@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_logout'])) {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Confirmar Cierre de Sesión - BOOKTRACKER</title>
@@ -30,18 +31,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_logout'])) {
             align-items: center;
             justify-content: center;
         }
+
         .logout-card {
             background: white;
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             animation: fadeIn 0.5s ease-in;
         }
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="row justify-content-center">
@@ -52,9 +63,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_logout'])) {
                             <i class="fas fa-sign-out-alt fa-3x text-warning mb-3"></i>
                             <h2 class="card-title">Cerrar Sesión</h2>
                         </div>
-                        
+
                         <p class="lead mb-4">¿Estás seguro de que deseas cerrar la sesión?</p>
-                        
+
                         <form method="POST" class="d-flex gap-3 justify-content-center">
                             <button type="submit" name="confirm_logout" value="1" class="btn btn-danger btn-lg">
                                 <i class="fas fa-check"></i> Sí, Cerrar Sesión
@@ -71,4 +82,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_logout'])) {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
