@@ -76,15 +76,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
             $stmt = $pdo->prepare($sql);
             $stmt->execute([$username, $email, $password_hash]);
-            
+
             // Guardar mensaje de éxito en sesión
             $_SESSION['registration_success'] = "¡Cuenta creada exitosamente! Bienvenido/a, $username.";
             $_SESSION['registered_username'] = $username;
-            
+
             // Redirigir a la página de éxito
             header('Location: register_success.php');
             exit;
-            
+
         } catch (PDOException $e) {
             if ($e->getCode() == 23000) { // Error de duplicado
                 $errors['general'] = "El usuario o email ya están registrados";
@@ -98,25 +98,126 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Registro - BOOKTRACKER</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="../vistas/styles/style.css">
     <style>
+        /* Body */
         body {
             background: linear-gradient(135deg, #8B5E3C 0%, #F5E9DA 100%);
             min-height: 100vh;
             font-family: 'Merriweather', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
         }
+
+        /* Card */
         .card {
-            background: var(--beige, #F5E9DA);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            background: #fffdfbff;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            border: none;
+            padding: 2rem;
+        }
+
+        /* Card Title */
+        .card h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #8B5E3C;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Form Labels with icons */
+        .form-label i {
+            margin-right: 8px;
+            color: #8B5E3C;
+        }
+
+        /* Inputs */
+        .form-control {
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            border: 1px solid #C9B37F;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #8B5E3C;
+            box-shadow: 0 0 10px rgba(139, 94, 60, 0.2);
+        }
+
+        /* Invalid / Valid States */
+        .is-invalid {
+            border-color: #e57373;
+            box-shadow: none;
+        }
+
+        .is-valid {
+            border-color: #6d9c6d;
+            box-shadow: none;
+        }
+
+        /* Form Text */
+        .form-text {
+            font-size: 0.85rem;
+            color: #BCA18A;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background-color: #8B5E3C;
+            border-color: #8B5E3C;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover,
+        .btn-primary:focus {
+            background-color: #4E342E;
+            border-color: #4E342E;
+            color: #C9B37F;
+        }
+
+        /* Alerts */
+        .alert {
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            padding: 1rem 1.25rem;
+        }
+
+        /* Link */
+        a {
+            color: #8B5E3C;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #4E342E;
+            text-decoration: underline;
+        }
+
+        /* Responsive tweaks */
+        @media (max-width: 576px) {
+            .card {
+                padding: 1.5rem;
+            }
+
+            .card h2 {
+                font-size: 1.75rem;
+            }
         }
     </style>
+
 </head>
+
 <body class="login-body">
     <div class="container mt-5">
         <div class="row justify-content-center">
@@ -124,63 +225,50 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="card shadow">
                     <div class="card-body">
                         <h2 class="text-center mb-4">
-                            <i class="fas fa-user-plus"></i> Registro
+                            Crea tu cuenta
                         </h2>
-                        
+
                         <?php if (isset($errors['general'])): ?>
                             <div class="alert alert-danger"><?php echo $errors['general']; ?></div>
                         <?php endif; ?>
-                        
+
                         <form method="POST" novalidate>
                             <div class="mb-3">
                                 <label for="username" class="form-label">
                                     <i class="fas fa-user"></i> Usuario
                                 </label>
-                                <input type="text" 
-                                       class="form-control <?php echo isset($errors['username']) ? 'is-invalid' : ''; ?>" 
-                                       id="username" 
-                                       name="username" 
-                                       value="<?php echo htmlspecialchars($username ?? ''); ?>"
-                                       required
-                                       minlength="3"
-                                       maxlength="50"
-                                       pattern="[a-zA-Z0-9_]+"
-                                       placeholder="Ingresa tu usuario">
+                                <input type="text"
+                                    class="form-control <?php echo isset($errors['username']) ? 'is-invalid' : ''; ?>"
+                                    id="username" name="username"
+                                    value="<?php echo htmlspecialchars($username ?? ''); ?>" required minlength="3"
+                                    maxlength="50" pattern="[a-zA-Z0-9_]+" placeholder="Ingresa tu usuario">
                                 <?php if (isset($errors['username'])): ?>
                                     <div class="invalid-feedback"><?php echo $errors['username']; ?></div>
                                 <?php endif; ?>
                                 <div class="form-text">3-50 caracteres, solo letras, números y _</div>
                             </div>
-                            
+
                             <div class="mb-3">
                                 <label for="email" class="form-label">
                                     <i class="fas fa-envelope"></i> Email
                                 </label>
-                                <input type="email" 
-                                       class="form-control <?php echo isset($errors['email']) ? 'is-invalid' : ''; ?>" 
-                                       id="email" 
-                                       name="email" 
-                                       value="<?php echo htmlspecialchars($email ?? ''); ?>"
-                                       required
-                                       maxlength="100"
-                                       placeholder="Ingresa tu email">
+                                <input type="email"
+                                    class="form-control <?php echo isset($errors['email']) ? 'is-invalid' : ''; ?>"
+                                    id="email" name="email" value="<?php echo htmlspecialchars($email ?? ''); ?>"
+                                    required maxlength="100" placeholder="Ingresa tu email">
                                 <?php if (isset($errors['email'])): ?>
                                     <div class="invalid-feedback"><?php echo $errors['email']; ?></div>
                                 <?php endif; ?>
                             </div>
-                            
+
                             <div class="mb-3">
                                 <label for="password" class="form-label">
                                     <i class="fas fa-lock"></i> Contraseña
                                 </label>
-                                <input type="password" 
-                                       class="form-control <?php echo isset($errors['password']) ? 'is-invalid' : ''; ?>" 
-                                       id="password" 
-                                       name="password" 
-                                       required
-                                       minlength="8"
-                                       maxlength="72"
-                                       placeholder="Ingresa tu contraseña">
+                                <input type="password"
+                                    class="form-control <?php echo isset($errors['password']) ? 'is-invalid' : ''; ?>"
+                                    id="password" name="password" required minlength="8" maxlength="72"
+                                    placeholder="Ingresa tu contraseña">
                                 <?php if (isset($errors['password'])): ?>
                                     <div class="invalid-feedback"><?php echo $errors['password']; ?></div>
                                 <?php endif; ?>
@@ -188,37 +276,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     Mínimo 8 caracteres, debe incluir mayúsculas, minúsculas y números
                                 </div>
                             </div>
-                            
+
                             <div class="mb-3">
                                 <label for="confirm_password" class="form-label">
                                     <i class="fas fa-lock"></i> Confirmar Contraseña
                                 </label>
-                                <input type="password" 
-                                       class="form-control <?php echo isset($errors['confirm_password']) ? 'is-invalid' : ''; ?>" 
-                                       id="confirm_password" 
-                                       name="confirm_password" 
-                                       required
-                                       minlength="8"
-                                       maxlength="72"
-                                       placeholder="Confirma tu contraseña">
+                                <input type="password"
+                                    class="form-control <?php echo isset($errors['confirm_password']) ? 'is-invalid' : ''; ?>"
+                                    id="confirm_password" name="confirm_password" required minlength="8" maxlength="72"
+                                    placeholder="Confirma tu contraseña">
                                 <?php if (isset($errors['confirm_password'])): ?>
                                     <div class="invalid-feedback"><?php echo $errors['confirm_password']; ?></div>
                                 <?php endif; ?>
                             </div>
-                            
+
                             <button type="submit" class="btn btn-primary w-100 py-2">
-                                 <i class="fas fa-user-plus"></i> Registrarse
-                             </button>
-    <style>
-        .btn-primary {
-            background-color: #0074D9;
-            border-color: #0074D9;
-        }
-        .btn-primary:hover, .btn-primary:focus {
-            background-color: #005fa3;
-            border-color: #005fa3;
-        }
-    </style>
+                                <i class="fas fa-user-plus"></i> Registrarse
+                            </button>
+                            <style>
+                                .btn-primary {
+                                    background-color: #8B5E3C;
+                                    border-color: #714d32ff;
+                                }
+
+                                .btn-primary:hover,
+                                .btn-primary:focus {
+                                    background-color: #786252ff;
+                                    border-color: #714d32ff;
+                                }
+                            </style>
                         </form>
                         <p class="mt-3 text-center">
                             ¿Ya tienes cuenta? <a href="../vistas/login.php" class="fw-bold">Inicia sesión aquí</a>
@@ -232,7 +318,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Validación del lado del cliente
-        document.querySelector('form').addEventListener('submit', function(e) {
+        document.querySelector('form').addEventListener('submit', function (e) {
             let valid = true;
             const username = document.getElementById('username');
             const email = document.getElementById('email');
@@ -290,22 +376,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         });
 
         // Validación en tiempo real
-        document.getElementById('password').addEventListener('input', function() {
+        document.getElementById('password').addEventListener('input', function () {
             const password = this.value;
             const requirements = document.createElement('div');
             requirements.className = 'form-text';
-            
+
             const hasUpper = /[A-Z]/.test(password);
             const hasLower = /[a-z]/.test(password);
             const hasNumber = /[0-9]/.test(password);
             const hasLength = password.length >= 8;
-            
+
             let message = 'Requisitos: ';
             message += hasUpper ? '✓ Mayúsculas ' : '✗ Mayúsculas ';
             message += hasLower ? '✓ Minúsculas ' : '✗ Minúsculas ';
             message += hasNumber ? '✓ Números ' : '✗ Números ';
             message += hasLength ? '✓ 8+ caracteres' : '✗ 8+ caracteres';
-            
+
             let existingReq = this.parentNode.querySelector('.requirement-text');
             if (existingReq) {
                 existingReq.textContent = message;
@@ -317,7 +403,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         });
 
         // Validación en tiempo real para mejor UX
-        document.getElementById('username').addEventListener('input', function() {
+        document.getElementById('username').addEventListener('input', function () {
             const username = this.value;
             if (username.length >= 3 && username.length <= 50 && /^[a-zA-Z0-9_]+$/.test(username)) {
                 this.classList.remove('is-invalid');
@@ -327,7 +413,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         });
 
-        document.getElementById('email').addEventListener('input', function() {
+        document.getElementById('email').addEventListener('input', function () {
             const email = this.value;
             if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length <= 100) {
                 this.classList.remove('is-invalid');
@@ -337,7 +423,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         });
 
-        document.getElementById('password').addEventListener('input', function() {
+        document.getElementById('password').addEventListener('input', function () {
             const password = this.value;
             if (password.length >= 8 && password.length <= 72 && /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(password)) {
                 this.classList.remove('is-invalid');
@@ -347,7 +433,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         });
 
-        document.getElementById('confirm_password').addEventListener('input', function() {
+        document.getElementById('confirm_password').addEventListener('input', function () {
             const confirm = this.value;
             const password = document.getElementById('password').value;
             if (confirm === password && confirm.length > 0) {
@@ -379,12 +465,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         // Auto-quitar alertas después de 5 segundos
-        setTimeout(function() {
+        setTimeout(function () {
             const alerts = document.querySelectorAll('.alert');
-            alerts.forEach(function(alert) {
+            alerts.forEach(function (alert) {
                 alert.style.transition = 'opacity 0.5s';
                 alert.style.opacity = '0';
-                setTimeout(function() {
+                setTimeout(function () {
                     alert.remove();
                 }, 500);
             });
@@ -394,4 +480,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         document.getElementById('username').focus();
     </script>
 </body>
+
 </html>
